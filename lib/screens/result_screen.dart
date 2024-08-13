@@ -55,10 +55,14 @@ class _ResultScreenState extends State<ResultScreen> {
         for (int j = i + 1; j < group.length; j++) {
           final user1 = group[i];
           final user2 = group[j];
-          final commonAttributes = Set.from(user1.sublist(2))
-              .intersection(Set.from(user2.sublist(2)));
-          if (commonAttributes.length >= 2) {
-            matchingUsers.add(user1[0]); // 첫 번째 속성만 필요
+
+          // 세 번째 속성이 다르고, 2개 이상의 공통 속성을 가지는지 확인
+          if (user1[2] != user2[2]) {
+            final commonAttributes = Set.from(user1.sublist(3))
+                .intersection(Set.from(user2.sublist(3)));
+            if (commonAttributes.length >= 2) {
+              matchingUsers.add(user1[0]); // 첫 번째 속성만 필요
+            }
           }
         }
       }

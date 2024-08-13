@@ -16,4 +16,11 @@ abstract class FindjjakTextTheme {
     color: Colors.black,
     letterSpacing: 2,
   );
+  static const Listviewtext = TextStyle(
+    fontFamily: 'Pretendard',
+    fontWeight: FontWeight.w200,
+    fontSize: 20,
+    color: Colors.black,
+    letterSpacing: 2,
+  );
 }

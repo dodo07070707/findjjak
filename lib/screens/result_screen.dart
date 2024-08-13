@@ -35,15 +35,18 @@ class _ResultScreenState extends State<ResultScreen> {
     print(allLists);
   }
 
-  String? findMatchingUser(List<List<String>> users) {
-    // 두 번째 속성이 같은 사용자 그룹을 찾기
+  String? findMatchingUser(List<List<String>> users, List<String> nowList) {
+    // nowlist와 두 번째 속성이 같은 사용자 그룹을 찾기
     final Map<String, List<List<String>>> groups = {};
     for (var user in users) {
-      final key = user[1]; // 두 번째 속성
-      if (!groups.containsKey(key)) {
-        groups[key] = [];
+      if (nowList.contains(user[1])) {
+        // nowlist에 두 번째 속성이 포함된 사용자만 선택
+        final key = user[1]; // 두 번째 속성
+        if (!groups.containsKey(key)) {
+          groups[key] = [];
+        }
+        groups[key]!.add(user);
       }
-      groups[key]!.add(user);
     }
 
     // 조건을 만족하는 사용자 그룹을 필터링
@@ -83,50 +86,81 @@ class _ResultScreenState extends State<ResultScreen> {
     // ignore: unused_local_variable
     double screenWidth = MediaQuery.of(context).size.width;
     //1440 1024
-    final randomUser = findMatchingUser(allLists);
+    final randomUser = findMatchingUser(allLists, nowlist);
     return Scaffold(
-      body: SizedBox(
-        width: screenWidth,
-        height: screenHeight,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: screenWidth / 1440 * 500,
-              height: screenHeight / 1080 * 400,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 1),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Center(
-                child: CustomText(
-                    text: randomUser != null
-                        ? '랜덤으로 선택된 사용자: $randomUser'
-                        : '조건을 만족하는 사용자가 없습니다.',
-                    style: FindjjakTextTheme.SelectGender),
-              ),
-            ),
-            SizedBox(height: screenHeight / 1024 * 50),
-            GestureDetector(
-              onTap: () {
-                Get.offAll(() => const StartScreen());
-              },
-              child: Container(
-                width: screenWidth / 1440 * 70,
-                height: screenWidth / 1440 * 70,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: screenWidth,
+          height: screenHeight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: screenWidth / 1440 * 500,
+                height: screenHeight / 1080 * 400,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1.5),
-                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.black, width: 1),
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                child: Icon(
-                  Icons.arrow_forward_ios_sharp,
-                  color: Colors.black,
-                  size: screenWidth / 1440 * 22,
-                  weight: 0.5,
+                child: Center(
+                  child: CustomText(
+                      text: randomUser != null
+                          ? '랜덤으로 선택된 사용자: $randomUser'
+                          : '조건을 만족하는 사용자가 없습니다.',
+                      style: FindjjakTextTheme.SelectGender),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: screenHeight / 1024 * 50),
+              GestureDetector(
+                onTap: () {
+                  Get.offAll(() => const StartScreen());
+                },
+                child: Container(
+                  width: screenWidth / 1440 * 70,
+                  height: screenWidth / 1440 * 70,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black, width: 1.5),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Icon(
+                    Icons.arrow_forward_ios_sharp,
+                    color: Colors.black,
+                    size: screenWidth / 1440 * 22,
+                    weight: 0.5,
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight / 1024 * 50),
+              SizedBox(
+                height: screenHeight / 1024 * 200,
+                child: ListView.separated(
+                  padding: EdgeInsets.zero,
+                  itemCount: allLists.length,
+                  separatorBuilder: (BuildContext ctx, int idx) {
+                    return SizedBox(height: screenHeight / 932 * 10);
+                  },
+                  itemBuilder: (context, index) {
+                    return Container(
+                        width: screenWidth / 1440 * 1000,
+                        height: screenHeight / 1024 * 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Colors.black,
+                          ),
+                        ),
+                        child: Center(
+                          child: CustomText(
+                              text:
+                                  '${allLists[index][0]},${allLists[index][1]},${allLists[index][2]},${allLists[index][3]},${allLists[index][4]},${allLists[index][5]},${allLists[index][6]}',
+                              style: FindjjakTextTheme.Listviewtext),
+                        ));
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

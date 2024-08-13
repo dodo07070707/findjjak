@@ -36,37 +36,26 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   String? findMatchingUser(List<List<String>> users, List<String> nowList) {
-    // nowlist와 두 번째 속성이 같은 사용자 그룹을 찾기
-    final Map<String, List<List<String>>> groups = {};
-    for (var user in users) {
-      if (nowList.contains(user[1])) {
-        // nowlist에 두 번째 속성이 포함된 사용자만 선택
-        final key = user[1]; // 두 번째 속성
-        if (!groups.containsKey(key)) {
-          groups[key] = [];
-        }
-        groups[key]!.add(user);
-      }
-    }
+    // 현재 사용자를 제외한 사용자만 필터링
+    final filteredUsers =
+        users.where((user) => !nowList.contains(user[0])).toList();
 
-    // 조건을 만족하는 사용자 그룹을 필터링
+    // 현재 사용자의 정보
+    final nowUser = users.firstWhere((user) => nowList.contains(user[0]));
+    final nowUserSecondAttribute = nowUser[1];
+    final nowUserThirdAttribute = nowUser[2];
+    final nowUserOtherAttributes = nowUser.sublist(3);
+
+    // 조건을 만족하는 사용자 목록
     final List<String> matchingUsers = [];
-    for (var group in groups.values) {
-      if (group.length < 2) continue;
 
-      for (int i = 0; i < group.length; i++) {
-        for (int j = i + 1; j < group.length; j++) {
-          final user1 = group[i];
-          final user2 = group[j];
-
-          // 세 번째 속성이 다르고, 2개 이상의 공통 속성을 가지는지 확인
-          if (user1[2] != user2[2]) {
-            final commonAttributes = Set.from(user1.sublist(3))
-                .intersection(Set.from(user2.sublist(3)));
-            if (commonAttributes.length >= 2) {
-              matchingUsers.add(user1[0]); // 첫 번째 속성만 필요
-            }
-          }
+    for (var user in filteredUsers) {
+      if (user[1] == nowUserSecondAttribute &&
+          user[2] != nowUserThirdAttribute) {
+        final commonAttributes = Set.from(user.sublist(3))
+            .intersection(Set.from(nowUserOtherAttributes));
+        if (commonAttributes.length >= 2) {
+          matchingUsers.add(user[0]); // 첫 번째 속성만 필요
         }
       }
     }
@@ -104,9 +93,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 ),
                 child: Center(
                   child: CustomText(
-                      text: randomUser != null
-                          ? '랜덤으로 선택된 사용자: $randomUser'
-                          : '조건을 만족하는 사용자가 없습니다.',
+                      text: randomUser ?? '조건을 만족하는 사용자가 없습니다.',
                       style: FindjjakTextTheme.SelectGender),
                 ),
               ),

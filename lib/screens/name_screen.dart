@@ -21,7 +21,9 @@ class _NameScreenState extends State<NameScreen> {
   String? whymo;
   String? personality;
   String? jinlo;
-  final TextEditingController _controller = TextEditingController();
+  String? grade;
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
   String id = '';
   List<List<String>> allLists = [];
 
@@ -34,7 +36,8 @@ class _NameScreenState extends State<NameScreen> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller1.dispose();
+    _controller2.dispose();
     super.dispose();
   }
 
@@ -60,7 +63,15 @@ class _NameScreenState extends State<NameScreen> {
 
   Future<void> _saveValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> info = [id, gender!, taste!, whymo!, personality!, jinlo!];
+    List<String> info = [
+      id,
+      grade!,
+      gender!,
+      taste!,
+      whymo!,
+      personality!,
+      jinlo!
+    ];
     List<String> storedLists = prefs.getStringList('allLists') ?? [];
     storedLists.add(jsonEncode(info));
     await prefs.setStringList('nowlist', info);
@@ -80,6 +91,7 @@ class _NameScreenState extends State<NameScreen> {
         height: screenHeight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: screenHeight / 1024 * 150),
             Container(
@@ -113,24 +125,50 @@ class _NameScreenState extends State<NameScreen> {
               ),
             ),
             SizedBox(height: screenHeight / 1024 * 100),
-            SizedBox(
-              width: screenWidth / 1440 * 500,
-              child: TextField(
-                controller: _controller,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: '인스타그램 아이디를 입력해주세요 (e.g. @d0_.yxn_)',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: screenWidth / 1440 * 220,
+                  child: TextField(
+                    controller: _controller1,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: '학년을 입력해주세요 (e.g. 2)',
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(width: screenWidth / 1440 * 60),
+                SizedBox(
+                  width: screenWidth / 1440 * 220,
+                  child: TextField(
+                    controller: _controller2,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: '인스타그램 아이디를 입력해주세요 (e.g. @d0_.yxn_)',
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: screenHeight / 1024 * 40),
             GestureDetector(
               onTap: () {
                 setState(() {
-                  id = _controller.text;
+                  grade = _controller1.text.toString();
+                  id = _controller2.text;
                 });
-                _saveValue();
-                Get.to(() => const ResultScreen());
+                if (id == '') {
+                  Get.snackbar(
+                    '알림',
+                    '아이디를 입력해주세요.',
+                    snackPosition: SnackPosition.BOTTOM,
+                    duration: const Duration(seconds: 2),
+                  );
+                } else {
+                  _saveValue();
+                  Get.to(() => const ResultScreen());
+                }
               },
               child: Container(
                 width: screenWidth / 1440 * 70,

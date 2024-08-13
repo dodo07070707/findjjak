@@ -6,3 +6,7 @@
 김도윤  
 **Used Stack**  
 Dart, Flutter  
+
+```
+flutter build web 후 별도 pages용 레포로 이동
+```

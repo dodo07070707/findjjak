@@ -40,11 +40,11 @@ class _StartScreenState extends State<StartScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
                   onTap: () {
-                    _saveValue('boy');
+                    _saveValue('랄프');
                     Get.to(() => const SelectCategoryScreen());
                   },
                   child: SizedBox(
@@ -52,14 +52,14 @@ class _StartScreenState extends State<StartScreen> {
                     height: screenHeight,
                     child: const Center(
                       child: CustomText(
-                        text: '남자',
+                        text: '랄프',
                         style: FindjjakTextTheme.SelectGender,
                       ),
                     ),
                   ),
                 ),
                 Container(
-                  width: screenWidth / 1024 * 2,
+                  width: screenWidth / 1024 * 1,
                   height: screenHeight,
                   decoration: const BoxDecoration(
                     color: Colors.black,
@@ -67,7 +67,7 @@ class _StartScreenState extends State<StartScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    _saveValue('boy');
+                    _saveValue('바넬로피');
                     Get.to(() => const SelectCategoryScreen());
                   },
                   child: SizedBox(
@@ -75,7 +75,7 @@ class _StartScreenState extends State<StartScreen> {
                     height: screenHeight,
                     child: const Center(
                       child: CustomText(
-                        text: '여자',
+                        text: '바넬로피',
                         style: FindjjakTextTheme.SelectGender,
                       ),
                     ),

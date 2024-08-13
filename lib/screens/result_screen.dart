@@ -117,35 +117,6 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: screenHeight / 1024 * 50),
-              SizedBox(
-                height: screenHeight / 1024 * 200,
-                child: ListView.separated(
-                  padding: EdgeInsets.zero,
-                  itemCount: allLists.length,
-                  separatorBuilder: (BuildContext ctx, int idx) {
-                    return SizedBox(height: screenHeight / 932 * 10);
-                  },
-                  itemBuilder: (context, index) {
-                    return Container(
-                        width: screenWidth / 1440 * 1000,
-                        height: screenHeight / 1024 * 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.black,
-                          ),
-                        ),
-                        child: Center(
-                          child: CustomText(
-                              text:
-                                  '${allLists[index][0]},${allLists[index][1]},${allLists[index][2]},${allLists[index][3]},${allLists[index][4]},${allLists[index][5]},${allLists[index][6]}',
-                              style: FindjjakTextTheme.Listviewtext),
-                        ));
-                  },
-                ),
-              ),
             ],
           ),
         ),

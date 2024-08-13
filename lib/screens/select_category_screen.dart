@@ -14,7 +14,7 @@ class SelectCategoryScreen extends StatefulWidget {
   State<SelectCategoryScreen> createState() => _SelectCategoryScreenState();
 }
 
-List<String> tastelist = ['로코', '액션', '호러', 'SF'];
+List<String> tastelist = ['로맨스코미디', '액션', '호러/스릴러', 'SF'];
 List<String> whymolist = ['고양이상', '강아지상', '토끼상', '여우상'];
 List<String> personalitylist = ['다정한', '츤데레', '애교있는'];
 List<String> jinlolist = ['이과', '문과', '예체능'];

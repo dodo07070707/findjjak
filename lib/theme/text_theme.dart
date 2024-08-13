@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:findjjak/theme/color_theme.dart';
 
 abstract class FindjjakTextTheme {
-  static final Main = TextStyle(
+  static const SelectGender = TextStyle(
     fontFamily: 'Pretendard',
-    fontSize: 64,
-    color: Colors.white,
+    fontWeight: FontWeight.w200,
+    fontSize: 40,
+    color: Colors.black,
     letterSpacing: 2,
-    shadows: [
-      Shadow(
-        blurRadius: 10,
-        color: Colors.white.withOpacity(0.7),
-        offset: const Offset(0, 0),
-      ),
-    ],
+  );
+  static const ReCheck = TextStyle(
+    fontFamily: 'Pretendard',
+    fontWeight: FontWeight.w200,
+    fontSize: 30,
+    color: Colors.black,
+    letterSpacing: 2,
   );
 }
